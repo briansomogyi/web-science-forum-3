@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .docker
+    stdin_open: true
+    tty: true
+    container_name: app.web-science-forum-3
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: true
+      CHOKIDAR_INTERVAL: 100
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      # exclude
+      - /app/.git/
+    working_dir: /app
+    user: 1000:1000
