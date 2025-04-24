@@ -16,29 +16,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { usePostStore } from '../stores/postStore'
 
-const items = ref([])
-const isLoading = ref(false)
-const error = ref(null)
+const postStore = usePostStore()
 
-const fetchItems = async () => {
-    isLoading.value = true
-    error.value = null
-
-    try {
-        const response = await axios.get('http://localhost:3000/api/items')
-        items.value = response.data
-    } catch (err) {
-        error.value = 'Failed to fetch items'
-        console.error(err)
-    } finally {
-        isLoading.value = false
-    }
-}
+// Use Pinia state and actions
+const { items, isLoading, error, fetchItems } = postStore
 </script>
-
-<style scoped>
-/* Add additional styling if needed */
-</style>

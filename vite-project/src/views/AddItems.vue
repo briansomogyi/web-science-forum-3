@@ -7,45 +7,25 @@
 
         <div v-if="isLoading" class="text-gray-500">Loading...</div>
         <div v-if="error" class="text-red-500">{{ error }}</div>
-        <div v-if="success" class="text-green-500">{{ success }}</div>
+        <div v-if="!error && !isLoading">Items added successfully!</div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { usePostStore } from '../stores/postStore'
 
-const isLoading = ref(false)
-const error = ref(null)
-const success = ref(null)
+const postStore = usePostStore()
 
-const addItems = async () => {
-    isLoading.value = true
-    error.value = null
-    success.value = null
+// Use Pinia actions
+const { isLoading, error } = postStore
 
-    const newItems = [
+const addItems = () => {
+    postStore.addItems([
         { name: 'New Item 1' },
         { name: 'New Item 2' },
         { name: 'New Item 3' },
         { name: 'New Item 4' },
         { name: 'New Item 5' },
-    ]
-
-    try {
-        const response = await axios.post('http://localhost:3000/api/items', {
-            newItems,
-        })
-        success.value = 'Items added successfully!'
-    } catch (err) {
-        error.value = 'Failed to add items'
-        console.error(err)
-    } finally {
-        isLoading.value = false
-    }
+    ])
 }
 </script>
-
-<style scoped>
-/* Add additional styling if needed */
-</style>

@@ -7,35 +7,19 @@
 
         <div v-if="isLoading" class="text-gray-500">Loading...</div>
         <div v-if="error" class="text-red-500">{{ error }}</div>
-        <div v-if="success" class="text-green-500">{{ success }}</div>
+        <div v-if="!error && !isLoading">Items deleted successfully!</div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { usePostStore } from '../stores/postStore'
 
-const isLoading = ref(false)
-const error = ref(null)
-const success = ref(null)
+const postStore = usePostStore()
 
-const deleteItems = async () => {
-    isLoading.value = true
-    error.value = null
-    success.value = null
+// Use Pinia actions
+const { isLoading, error } = postStore
 
-    try {
-        const response = await axios.delete('http://localhost:3000/api/items')
-        success.value = 'Items deleted successfully!'
-    } catch (err) {
-        error.value = 'Failed to delete items'
-        console.error(err)
-    } finally {
-        isLoading.value = false
-    }
+const deleteItems = () => {
+    postStore.deleteItems()
 }
 </script>
-
-<style scoped>
-/* Add additional styling if needed */
-</style>
