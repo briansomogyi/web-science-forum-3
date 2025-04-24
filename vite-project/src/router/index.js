@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '../views/HomePage.vue'
+import GetItems from '../views/GetItems.vue'
+import AddItems from '../views/AddItems.vue'
+import UpdateItems from '../views/UpdateItems.vue'
+import DeleteItems from '../views/DeleteItems.vue'
 
 const routes = [
-    { path: '/', name: 'Home', component: HomePage },
+    { path: '/get-items', name: 'GetItems', component: GetItems },
+    { path: '/add-items', name: 'AddItems', component: AddItems },
+    { path: '/update-items', name: 'UpdateItems', component: UpdateItems },
+    { path: '/delete-items', name: 'DeleteItems', component: DeleteItems },
 ]
 
 const router = createRouter({
